@@ -1,0 +1,2 @@
+El error persiste y es el mismo que mencionaste anteriormente. El mensaje de error sugiere que Node.js no puede encontrar el módulo llamado 'C:\Users\lucas\Desktop\CURSO-NODE.JS\os-info.msj'.
+

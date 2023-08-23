@@ -1,0 +1,22 @@
+{
+  "name": "curso-node.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.os-Info.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "picocolors": "1.0.0"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "17.1.0",
+    "standard": "17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  }
+}
