@@ -1,6 +1,6 @@
 import express, { json } from 'express' // require -> commonJS
-import { moviesRouter } from './routes/movies'
-import { corsMiddleware } from './middlewares/cors'
+import { moviesRouter } from './routes/movies.js'
+import { corsMiddleware } from './middlewares/cors.js'
 //los import de un json en el futuro se van a poder hacer así:
 //import movies from './movies.json' with {type: 'json'}
 
