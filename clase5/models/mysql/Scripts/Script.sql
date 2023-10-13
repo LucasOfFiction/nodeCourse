@@ -72,8 +72,6 @@ VALUES
 	((SELECT id FROM movie WHERE title='The Social Network'), (SELECT id FROM genre 	WHERE name='Biography')),
 	((SELECT id FROM movie WHERE title='Avatar'), (SELECT id FROM genre 	WHERE name='Fantasy'));
 
-SELECT HEX(id) AS id, title, year, director, duration, poster, rate FROM movie;
-
 
 
 
