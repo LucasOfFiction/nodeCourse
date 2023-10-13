@@ -1,0 +1,37 @@
+### recuperar todas la películas
+GET  http://localhost:1234/movies
+
+### recuperar una película por id
+GET  http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+
+### recuperar 2 película por página 
+GET  http://localhost:1234/movies/page?page=6
+
+### recuperar  película por género
+GET  http://localhost:1234/movies?genre=Sci-Fi
+
+
+### Crear una película
+POST http://localhost:1234/movies
+Content-Type: application/json 
+    
+{
+    "title": "The Dark Knight mastered",
+    "year": 2008,
+    "director": "Christopher Nolan",
+    "duration": 152,
+    "poster": "https://i.ebayimg.com/images/g/yokAAOSw8w1YARbm/s-l1200.jpg",
+    "genre": ["Action", "Crime", "Drama"],
+    "rate": 9.0
+  }
+
+### Actualizar una película
+PATCH http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+Content-Type: application/json
+
+{
+  "year": 2002
+}
+
+### Borrar una película
+DELETE http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
