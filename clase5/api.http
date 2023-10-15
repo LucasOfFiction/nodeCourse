@@ -8,7 +8,7 @@ GET  http://localhost:1234/movies/9F5A258E6AE211EE98FFF80DACF4595E
 GET  http://localhost:1234/movies/page?page=6
 
 ### recuperar  película por género
-GET  http://localhost:1234/movies?genre=Drama
+GET  http://localhost:1234/movies?genre=Action
 
 
 ### Crear una película
@@ -17,10 +17,10 @@ Content-Type: application/json
 
 {
     "sql":"SELECT * FROM users",
-    "title": "The 123",
+    "title": "The 1234",
     "year": 2009,
-    "director": "Christoph Noland",
-    "duration": 523,
+    "director": "Christo Nola",
+    "duration": 500,
     "poster": "https://images-na.ssl-images-amazon.com/images/I/51kz0J%2BZBTL._SY445_.jpg",
     "genre": ["Action"],
     "rate": 9.7

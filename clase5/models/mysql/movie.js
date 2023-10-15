@@ -79,15 +79,28 @@ export class movieModel {
       throw new Error('Error creating movie')
     }
     try {
-      // Insertar manualmente el género en la tabla 'movie_genres' utilizando la variable genreInput
-      await connection.query(
-        `INSERT INTO movie_genres(movie_id, genre_id) 
-        VALUES (UNHEX(REPLACE(?, '-', '')), ?);`,
-        [uuid, genreInput]
-      )
+      // Obtén el ID del género basado en genreInput
+      const [genreQueryResult] = await connection.query(
+        'SELECT id FROM genre WHERE name = ?;', [genreInput]
+      );
+  
+      if (genreQueryResult.length > 0) {
+        // Si se encuentra el género en la base de datos, asocia la película con el género en la tabla 'movie_genres'
+        const [{ id: genreId }] = genreQueryResult;
+  
+        await connection.query(
+          `INSERT INTO movie_genres(movie_id, genre_id)
+          VALUES (UNHEX(REPLACE(?, '-', '')), ?);`,
+          [uuid, genreId]
+        );
+      } else {
+        // Si el género no existe en la base de datos, puedes manejarlo aquí
+        console.error('El género no existe en la base de datos');
+      }
     } catch (e) {
-      throw new Error('Error creating movie')
+      throw new Error('Error creating movie');
     }
+  
 
     const [movies] = await connection.query(
       `SELECT title, year, director, duration, poster, rate, HEX(id) AS id
