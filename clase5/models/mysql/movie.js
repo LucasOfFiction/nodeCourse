@@ -78,6 +78,16 @@ export class movieModel {
     } catch (e) {
       throw new Error('Error creating movie')
     }
+    try {
+      // Insertar manualmente el género en la tabla 'movie_genres' utilizando la variable genreInput
+      await connection.query(
+        `INSERT INTO movie_genres(movie_id, genre_id) 
+        VALUES (UNHEX(REPLACE(?, '-', '')), ?);`,
+        [uuid, genreInput]
+      )
+    } catch (e) {
+      throw new Error('Error creating movie')
+    }
 
     const [movies] = await connection.query(
       `SELECT title, year, director, duration, poster, rate, HEX(id) AS id
@@ -85,6 +95,7 @@ export class movieModel {
       [uuid]
     )
     return movies[0]
+    
   }
 
   static async delete ({ id }) {
