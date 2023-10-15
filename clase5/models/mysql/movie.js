@@ -45,11 +45,46 @@ export class movieModel {
 
 
   static async getById ({ id }) {
+    const [movies] = await connection.query(
+      `SELECT HEX(id) AS id, title, year, director, duration, poster, rate 
+        FROM movie WHERE id= UNHEX(REPLACE(?, '-', ''));`,
+        [id])
+    if (movies.length === 0) return null
 
+    return movies[0];
   }
 
   static async create ({ input }) {
     
+    const {
+      genre: genreInput,
+      title,
+      year,
+      duration,
+      director,
+      rate,
+      poster,
+    } = input
+
+    const [uuidResult] = await connection.query('SELECT UUID() uuid;')
+    const [{ uuid }] = uuidResult
+
+    try {
+      await connection.query( 
+        `INSERT INTO movie( id, title, year, director, duration, poster, rate) 
+        VALUES(UNHEX(REPLACE("${uuid}", '-', '')), ?, ?, ?, ?, ?, ?);`,
+        [title, year, director, duration, poster, rate]
+      ) 
+    } catch (e) {
+      throw new Error('Error creating movie')
+    }
+
+    const [movies] = await connection.query(
+      `SELECT title, year, director, duration, poster, rate, HEX(id) AS id
+      FROM movie WHERE id= UNHEX(REPLACE(?, '-', ''));`,
+      [uuid]
+    )
+    return movies[0]
   }
 
   static async delete ({ id }) {

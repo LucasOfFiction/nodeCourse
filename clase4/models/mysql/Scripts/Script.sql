@@ -6,7 +6,7 @@ USE moviesdb;
 -- creaAción de tabla movies
 
 CREATE TABLE movie (
-    id BINARY(16) PRIMARY KEY,
+    id BINARY(16) PRIMARY key,
     title VARCHAR(255) NOT NULL,
     year INT NOT NULL,
     director VARCHAR(255) NOT NULL,
