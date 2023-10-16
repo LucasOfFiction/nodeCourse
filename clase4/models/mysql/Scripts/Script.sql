@@ -21,8 +21,8 @@ CREATE TABLE genre(
     );
 
 CREATE TABLE movie_genres(
-	movie_id BINARY(16) REFERENCES movie(id),
-	genre_id INT REFERENCES genre(id),
+	movie_id BINARY(16) REFERENCES movie(id) ON DELETE CASCADE,
+	genre_id INT REFERENCES genre(id) ON DELETE CASCADE,
 	PRIMARY KEY (movie_id, genre_id)
 );
 

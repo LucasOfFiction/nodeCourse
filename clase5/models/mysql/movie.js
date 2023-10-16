@@ -54,6 +54,22 @@ export class movieModel {
     return movies[0];
   }
 
+  static async getPaginatedMovies ({ page, moviesPerPage}) {
+    try {
+      const offset = (page - 1) * moviesPerPage;
+      const [movies] = await connection.query(`
+        SELECT HEX(id) AS id, title, year, director, duration, poster, rate
+        FROM movie
+        LIMIT ? OFFSET ?;
+      `, [moviesPerPage, offset]);
+  
+      return movies;
+    } catch (error) {
+      console.error('Error al obtener películas paginadas:', error);
+      throw new Error('Error al obtener películas paginadas');
+    }
+  }
+
   static async create ({ input }) {
     
     const {
@@ -112,10 +128,56 @@ export class movieModel {
   }
 
   static async delete ({ id }) {
-
+    try {
+      // Implementa la lógica para eliminar la película de la base de datos
+      const result = await connection.query(
+        'DELETE FROM movie WHERE id = UNHEX(REPLACE(?, "-", ""));',
+        [id]
+      );
+  
+      if (result[0].affectedRows > 0) {
+        // La película se eliminó exitosamente
+        return 'Película eliminada con éxito';
+      } else {
+        // No se encontró una película con ese ID
+        throw new Error('Película no encontrada');
+      }
+    } catch (error) {
+      // Se produjo un error al eliminar la película
+      throw new Error('Error al eliminar la película');
+    }
   }
 
   static async update ({ id, input }) {
-    
+    try {
+      // Verificar si la película con el ID proporcionado existe
+      const [existingMovie] = await connection.query(
+        'SELECT * FROM movie WHERE id = UNHEX(REPLACE(?, "-", ""));',
+        [id]
+      );
+  
+      if (existingMovie.length === 0) {
+        throw new Error('Película no encontrada');
+      }
+  
+      const {
+        title,
+        year,
+        director,
+        duration,
+        poster,
+        rate,
+      } = input;
+  
+      // Realizar la actualización de la película
+      await connection.query(
+        'UPDATE movie SET title = ?, year = ?, director = ?, duration = ?, poster = ?, rate = ? WHERE id = UNHEX(REPLACE(?, "-", ""));',
+        [title, year, director, duration, poster, rate, id]
+      );
+  
+      return 'Película actualizada con éxito';
+    } catch (error) {
+      throw new Error('Error al actualizar la película');
+    }
   }
 }
