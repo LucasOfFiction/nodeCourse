@@ -10,7 +10,7 @@ const config = {
 
 const connection = await mysql2.createConnection(config);
 
-export class movieModel {
+export class MovieModel {
   static async getAll ({ genre }) {
     
     if (genre) {
@@ -54,21 +54,21 @@ export class movieModel {
     return movies[0];
   }
 
-  static async getPaginatedMovies ({ page, moviesPerPage}) {
-    try {
-      const offset = (page - 1) * moviesPerPage;
-      const [movies] = await connection.query(`
-        SELECT HEX(id) AS id, title, year, director, duration, poster, rate
-        FROM movie
-        LIMIT ? OFFSET ?;
-      `, [moviesPerPage, offset]);
+  // static async getPaginatedMovies ({ page}) {
+  //   try {
+  //     const moviesPerPage = 2;
+  //     const startIndex = (page - 1) * moviesPerPage;
+  //     const [movies] = await connection.execute(
+  //       'SELECT HEX(id) AS id, title, year, director, duration, poster, rate FROM movie LIMIT ?, ?',
+  //       [startIndex, moviesPerPage]
+  //     );
   
-      return movies;
-    } catch (error) {
-      console.error('Error al obtener películas paginadas:', error);
-      throw new Error('Error al obtener películas paginadas');
-    }
-  }
+  //     return movies;
+  //   } catch (error) {
+  //     console.error('Error al obtener películas paginadas:', error);
+  //     throw new Error('Error al obtener películas paginadas');
+  //   }
+  // }
 
   static async create ({ input }) {
     

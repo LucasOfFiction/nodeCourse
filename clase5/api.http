@@ -2,10 +2,10 @@
 GET  http://localhost:1234/movies
 
 ### recuperar una película por id
-GET  http://localhost:1234/movies/D28D28A56BC011EE98FFF80DACF4595E
+GET  http://localhost:1234/movies/4A4E72647DCC11EE98FFF80DACF4595E
 
 ### recuperar 2 película por página 
-GET  http://localhost:1234/movies/page?page=1
+# GET  http://localhost:1234/movies/page?page=2
 
 ### recuperar  película por género
 GET  http://localhost:1234/movies?genre=Action
@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
     "sql":"SELECT * FROM users",
-    "title": "The 1234",
+    "title": "The 123456",
     "year": 2009,
     "director": "Christo Nola",
     "duration": 500,
@@ -27,7 +27,7 @@ Content-Type: application/json
 }
 
 ### Actualizar una película
-PATCH http://localhost:1234/movies/D28D28A56BC011EE98FFF80DACF4595E
+PATCH http://localhost:1234/movies/C07D8326706311EE98FFF80DACF4595E
 Content-Type: application/json
 
 {

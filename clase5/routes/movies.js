@@ -1,17 +1,25 @@
 import {Router} from 'express'
 
-import { movieController } from '../controllers/movies.js'
+// import {MovieModel} from '../models/mysql/movie.js' //acá se podría inyectar el modelo también si se quisiera 
 
-export const moviesRouter = Router()
+import { MovieController } from '../controllers/movies.js'
 
-moviesRouter.get('/', movieController.getAll),
+export const createMovieRouter = ({movieModel}) => {
 
-moviesRouter.get('/page', movieController.getPaginatedMovies),
+    const moviesRouter = Router()
 
-moviesRouter.get('/:id', movieController.getById),
+    const movieController = new MovieController({movieModel})
 
-moviesRouter.post('/', movieController.create),
 
-moviesRouter.delete('/:id', movieController.delete),
+    moviesRouter.get('/', movieController.getAll),
 
-moviesRouter.patch('/:id', movieController.update)
+    moviesRouter.get('/:id', movieController.getById),
+
+    moviesRouter.post('/', movieController.create),
+
+    moviesRouter.delete('/:id', movieController.delete),
+
+    moviesRouter.patch('/:id', movieController.update)
+
+    return moviesRouter
+}
